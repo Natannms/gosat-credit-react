@@ -4,13 +4,15 @@ import Home from './Home';
 import Requests from './Requests'
 import { useState } from 'react';
 function App() {
-  const [cpf, setCpf] = useState('2');
+  const [cpf, setCpf] = useState('');
+  const [opportunities, setOpportunities] = useState();
 
   const req = new Requests();
-  function setOportunities(){
-    let opportunities = req.getOpportunities(cpf);
-     opportunities.then((data) => {
-      console.log(data);
+  function getOpportunitiesList(){
+    let opportunitiesList = req.getOpportunities(cpf);
+    opportunitiesList.then((data) => {
+       setOpportunities(data.instituicoes);
+       console.log(opportunities);
     })
   }
   const handleChangeCpf = (e)=>{
@@ -19,7 +21,8 @@ function App() {
   const homeOptions = {
     cpf,
     handleChangeCpf,
-    setOportunities
+    getOpportunitiesList,
+    opportunities
   }
 
   return (
