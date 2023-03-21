@@ -1,0 +1,140 @@
+.container-full{
+    background-color: aquamarine;
+    width: 100%;
+    height: 100vh;
+}
+
+.header{
+    width: 100%;
+    background-color: #FA8B16;
+    height: 80px;
+    display: flex;
+}
+
+.AboveTheFold{
+    background: url("../assets/bg/2.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-ul{
+    display: flex;
+    list-style: none;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.app-name{
+    color: aliceblue;
+    text-shadow: 2px 1px 2px rgba(0,0,0,0.6);
+}
+
+
+.text-1xl{
+    font-size: 1.5rem;
+}
+
+.text-2xl{
+    font-size: 3rem;
+}
+.text-3xl{
+    font-size: 6rem;
+}
+
+.pt-2{
+    padding-top: 5.5rem;
+}
+
+.text-white{
+    color: antiquewhite;
+}
+.text-primary{
+
+}
+.pl-4{
+    padding-left: 12rem;
+}
+
+.w-96{
+    width: 24rem;
+}
+
+.w-108{
+    width: 27rem;
+}
+
+.w-120{
+    width: 30rem;
+}
+
+.w-132{
+    width: 33rem;
+}
+
+.w-144{
+    width: 36rem;
+}
+
+.w-156{
+    width: 39rem;
+}
+
+.w-168{
+    width: 42rem;
+}
+
+.w-180{
+    width: 45rem;
+}
+
+.w-192{
+    width: 48rem;
+}
+
+.w-204{
+    width: 51rem;
+}
+
+
+.input-group{
+    display: flex;
+    flex-direction: column;
+    width:320px;
+}
+
+.label{
+    font-size: 1.5rem;
+    color: aliceblue;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.input-cpf{
+    width: 100%;
+    height: 2.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    padding-left: 0.5rem;
+    font-size: 1.5rem;
+}
+
+.button-search{
+    width: 100%;
+    height: 2.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    background-color: #FA8B16;
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 1rem;
+}
