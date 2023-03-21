@@ -3,12 +3,12 @@ import AboveTheFold from './components/AboveTheFold';
 import Header from './components/Header';
 import './style.css';
 
-const Home = () => {
+const Home = ({options}) => {
 
     return (
         <div className='container-full'>
             <Header />
-            <AboveTheFold />
+            <AboveTheFold options={options}/>
         </div>
     );
 
