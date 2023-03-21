@@ -5,13 +5,13 @@ import Requests from './Requests'
 function App() {
 
   const req = new Requests();
-  function setOportunities(){
-    let opportunities = req.getOpportunities(11111111111);
+  function setOportunities(cpf){
+    let opportunities = req.getOpportunities(cpf);
      opportunities.then((data) => {
       console.log(data);
     })
   }
-  setOportunities();
+  setOportunities(11111111111);
   return (
     <div className="App">
        <Home />
