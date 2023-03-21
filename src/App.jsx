@@ -8,7 +8,10 @@ function App() {
   const [opportunities, setOpportunities] = useState();
   const [homeSpinner, setHomeSpinner] = useState(false);
   const [viewOpportunities, setViewOpportunities] = useState(false)
+  const [OfferSelected, setOfferSelected] = useState('');
+
   const req = new Requests();
+
   function getOpportunitiesList(){
     setViewOpportunities(false)
     setHomeSpinner(true)
@@ -21,6 +24,28 @@ function App() {
        }, 2000);
     })
   }
+
+  const HandleOfferSelected = (md)=>{
+    console.log("FILTRANDO MODALIDADES")
+    console.log(getOffer(opportunities));
+  }
+
+  const  getOffer = (instituicoes) =>{
+    const modalidades = [];
+    for (const instituicao of instituicoes) {
+      for (const modalidade of instituicao.modalidades) {
+        // if (modalidade.nome === 'crédito pessoal') {
+        //   modalidades.push(modalidade);
+        // }
+        req.getOffers(cpf, instituicao.id, modalidade.cod)
+        .then((data)=>{
+          console.log(data);
+        });
+      }
+    }
+    return modalidades;
+  }
+
   const handleChangeCpf = (e)=>{
     setCpf(e.target.value)
   }
@@ -30,7 +55,8 @@ function App() {
     getOpportunitiesList,
     opportunities,
     homeSpinner,
-    viewOpportunities
+    viewOpportunities,
+    HandleOfferSelected
   }
 
   return (

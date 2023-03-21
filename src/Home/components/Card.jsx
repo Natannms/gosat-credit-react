@@ -1,13 +1,18 @@
 import React from 'react'
 import '../style.css';
-const Card = ({opportunity}) => {
-    console.log(opportunity);
+import Badge from './Badge';
+const Card = ({ opportunity, HandleOfferSelected }) => {
     return (
         <div className='Card'>
             <div className='card-header'>
-                 <h1 className='card-title'>{opportunity.nome}</h1>
-                 <p className='card-subtitle'>Card Subtitle</p>
-                 <p className="card-description">Card Description</p>
+                <h1 className='card-title' onClick={()=>console.log("TESTEI")}>{opportunity.nome}</h1>
+                <div className="badge-container">
+                    {opportunity.modalidades.map((md) => {
+                        return (
+                            <Badge key={md.code} modalidade={md} onClick={()=>HandleOfferSelected(md)}/>
+                        );
+                    })}
+                </div>
             </div>
         </div>
     );
