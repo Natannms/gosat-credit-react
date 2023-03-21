@@ -2,21 +2,27 @@ import React from 'react'
 import '../style.css';
 import Card from './Card';
 import InputCpf from './InputCpf';
-
-const AboveTheFold = ({options}) => {
-    const {cpf, handleChangeCpf, getOpportunitiesList, opportunities} = options
+import Spinner from '../../hooks/Spinner'
+const AboveTheFold = ({ options }) => {
+    const { cpf, handleChangeCpf, getOpportunitiesList, opportunities, homeSpinner, viewOpportunities } = options
     return (
         <div className='AboveTheFold'>
             <h1 className='app-name text-3xl pt-2 pl-4'>Gosat Credits</h1>
-            {opportunities && opportunities.map((op)=>{
-                return <Card opportunity={op}/>
+           <div className="div spinner-container">
+                {homeSpinner && <Spinner />}
+           </div>
+
+            {opportunities && viewOpportunities && opportunities.map((op) => {
+                return (
+                    <Card opportunity={op} />
+                );
             })}
 
-            {!opportunities &&
-                <p className='text-primary text-1xl w-204 pl-4'>Não deixe para depois o pagamento daquele boleto ou a quitação de suas dívidas. Aproveite as inúmeras oportunidades de crédito disponíveis agora mesmo através do nosso incrível aplicativo, Gosat Credits!</p>
+            {!opportunities && !viewOpportunities &&
+                <p className='text-primary text-1xl w-156 pl-4'>Não deixe para depois o pagamento daquele boleto ou a quitação de suas dívidas. Aproveite as inúmeras oportunidades de crédito disponíveis agora mesmo através do nosso incrível aplicativo, Gosat Credits!</p>
             }
 
-            <InputCpf options={{cpf, handleChangeCpf, getOpportunitiesList}}/>
+            <InputCpf options={{ cpf, handleChangeCpf, getOpportunitiesList, viewOpportunities }} />
         </div>
     );
 
