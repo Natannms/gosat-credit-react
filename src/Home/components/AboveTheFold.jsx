@@ -6,9 +6,10 @@ import InputCpf from './InputCpf';
 import Spinner from '../../hooks/Spinner'
 import Button from '../../hooks/Button'
 import { FaArrowCircleLeft, FaRegChartBar } from "react-icons/fa";
+import { Graphs } from '../../Graphs';
 
 const AboveTheFold = ({ options }) => {
-    const { cpf, handleChangeCpf, getOpportunitiesList, opportunities, homeSpinner, viewOpportunities, HandleOfferSelected, offers, analyzeInGraphs, viewOffers, returnToHome, offerSpinner } = options
+    const { cpf, handleChangeCpf, getOpportunitiesList, opportunities, homeSpinner, viewOpportunities, HandleOfferSelected, offers, analyzeInGraphs, viewOffers, returnToHome, offerSpinner,viewGraphs, graphsOptions } = options
 
     return (
         <div className='AboveTheFold'>
@@ -23,7 +24,7 @@ const AboveTheFold = ({ options }) => {
                         {opportunities && viewOpportunities &&
                             <Button
                                 className="btn-secondary bg-secondary btn w-48 mb-2"
-                                title="Voltar1"
+                                title="Voltar"
                                 icon={<FaArrowCircleLeft />}
                                 onClick={() => { returnToHome() }}
                             />}
@@ -42,7 +43,7 @@ const AboveTheFold = ({ options }) => {
                 </div>
                 <div className="view-offer ajustments-left">
 
-                    {offers && offers.map((item) => {
+                    {offers && viewOffers && offers.map((item) => {
                         return (
                             <Offer QntParcelaMax={item.offer.QntParcelaMax} QntParcelaMin={item.offer.QntParcelaMin} jurosMes={item.offer.jurosMes} valorMax={item.offer.valorMax} valorMin={item.offer.valorMin
                             } />
@@ -50,8 +51,8 @@ const AboveTheFold = ({ options }) => {
                     })}
                       <div className="content-row pt-2">
                         {viewOffers && <Button
-                            className="btn-secondary bg-secondary btn w-48 mb-2"
-                            title="Voltar2"
+                            className="btn-secondary bg-secondary btn w-60 mb-2"
+                            title="Oportunidades"
                             icon={<FaArrowCircleLeft />}
                             onClick={() => { getOpportunitiesList()}}
                         />
@@ -59,10 +60,13 @@ const AboveTheFold = ({ options }) => {
 
                         {viewOffers && (
                             <div className="">
-                                <Button className="btn bg-third btn-third w-96 ml-2" icon={<FaRegChartBar />} title="Ofertas em gráficos" onClick={() => { analyzeInGraphs() }} />
+                                <Button className="btn bg-third btn-third w-72 ml-2" icon={<FaRegChartBar />} title="Ofertas em gráficos" onClick={() => { analyzeInGraphs() }} />
                             </div>
                         )}
                     </div>
+                </div>
+                <div className="view-graphs">
+                    {viewGraphs && <Graphs graphsOptions={graphsOptions} offers={offers} />}
                 </div>
             </div>
         </div>

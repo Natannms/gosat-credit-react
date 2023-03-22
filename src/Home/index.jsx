@@ -9,7 +9,6 @@ const Home = ({options}) => {
         <div className='container-full'>
             <Header />
             <AboveTheFold options={options}/>
-            
         </div>
     );
 }

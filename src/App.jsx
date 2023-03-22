@@ -17,7 +17,11 @@ function App() {
   const req = new Requests();
 
   const analyzeInGraphs = ()=>{
-    setViewHome(!viewHome)
+    // setViewHome(!viewHome)
+    setViewOffers(false)
+    setViewOpportunities(false)
+    setHomeSpinner(false)
+    setOfferSpinner(false)
     setViewGraphs(!viewGraphs)
   }
 
@@ -57,8 +61,6 @@ function App() {
           bestOffer = offers[i];
         }
       }
-      console.log(offers);
-      console.log("MELHOR OFERTA:", bestOffer);
     }
     // return melhor;
   }
@@ -88,6 +90,10 @@ function App() {
   const returnToHome = ()=>{
     window.location.reload()
   }
+
+  const graphsOptions = {
+    analyzeInGraphs,
+  }
   const homeOptions = {
     cpf,
     handleChangeCpf,
@@ -100,16 +106,16 @@ function App() {
     analyzeInGraphs,
     viewOffers,
     returnToHome,
-    offerSpinner
+    offerSpinner,
+    viewGraphs,
+    graphsOptions
   }
 
-  const graphsOptions = {
-    analyzeInGraphs,
-  }
+
   return (
     <div className="App">
       {viewHome &&  <Home options={homeOptions} />}
-      {viewGraphs && <Graphs graphsOptions={graphsOptions} offers={offers} />}
+
     </div>
   );
 }

@@ -87,7 +87,7 @@ export function Graphs({ graphsOptions, offers }) {
             } />
           );
         })}
-        <Button className="button-return" title="Voltar" icon={<FaArrowCircleLeft />} onClick={()=>{analyzeInGraphs()}}/>
+        <Button className="btn btn-secondary bg-secondary w-48 mt-2" title="Voltar" icon={<FaArrowCircleLeft />} onClick={()=>{analyzeInGraphs()}}/>
       </div>
     </div>
 
