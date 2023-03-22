@@ -3,13 +3,23 @@ import './App.css';
 import Home from './Home';
 import Requests from './Requests'
 import { useState } from 'react';
+import { Graphs } from './Graphs';
 function App() {
   const [cpf, setCpf] = useState('11111111111');
   const [opportunities, setOpportunities] = useState();
   const [homeSpinner, setHomeSpinner] = useState(false);
+  const [offerSpinner, setOfferSpinner] = useState(false)
   const [viewOpportunities, setViewOpportunities] = useState(false)
+  const [viewGraphs, setViewGraphs] = useState(false)
+  const [viewHome, setViewHome] = useState(true)
+  const [viewOffers, setViewOffers] = useState(false)
   const [offers, setOffers] = useState([]);
   const req = new Requests();
+
+  const analyzeInGraphs = ()=>{
+    setViewHome(!viewHome)
+    setViewGraphs(!viewGraphs)
+  }
 
   function getOpportunitiesList() {
     setViewOpportunities(false)
@@ -20,14 +30,19 @@ function App() {
       setTimeout(() => {
         setHomeSpinner(false)
         setViewOpportunities(true)
+        setViewOffers(false)
+        setOffers([])
       }, 2000);
     })
   }
 
   const HandleOfferSelected = (md) => {
+    setOfferSpinner(true)
     let all = getOffers(opportunities, md.nome)
     setTimeout(() => {
-
+      setViewOpportunities(false)
+      setOfferSpinner(false)
+      setViewOffers(true)
       setOffers(all)
     }, 5000);
 
@@ -47,7 +62,6 @@ function App() {
     }
     // return melhor;
   }
-
 
   const getOffers = (instituicoes, creditType) => {
     const modalidades = [];
@@ -70,6 +84,10 @@ function App() {
   const handleChangeCpf = (e) => {
     setCpf(e.target.value)
   }
+
+  const returnToHome = ()=>{
+    window.location.reload()
+  }
   const homeOptions = {
     cpf,
     handleChangeCpf,
@@ -79,11 +97,19 @@ function App() {
     viewOpportunities,
     HandleOfferSelected,
     offers,
+    analyzeInGraphs,
+    viewOffers,
+    returnToHome,
+    offerSpinner
   }
 
+  const graphsOptions = {
+    analyzeInGraphs,
+  }
   return (
     <div className="App">
-      <Home options={homeOptions} />
+      {viewHome &&  <Home options={homeOptions} />}
+      {viewGraphs && <Graphs graphsOptions={graphsOptions} offers={offers} />}
     </div>
   );
 }
