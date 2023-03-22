@@ -14,7 +14,7 @@ export default class Requests {
         })
     }
     async getOffers(cpf, instituicao_id, codModalidade ){
-        return await fetch(`${this.url}offer/${cpf}`)
+        return await fetch(`${this.url}offer/${cpf}/${instituicao_id}/${codModalidade}`)
         .then(response => response.json())
         .then(data => {
             return data
