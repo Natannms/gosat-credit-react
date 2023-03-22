@@ -3,13 +3,22 @@ import './App.css';
 import Home from './Home';
 import Requests from './Requests'
 import { useState } from 'react';
+import { Graphs } from './Graphs';
 function App() {
   const [cpf, setCpf] = useState('11111111111');
   const [opportunities, setOpportunities] = useState();
   const [homeSpinner, setHomeSpinner] = useState(false);
   const [viewOpportunities, setViewOpportunities] = useState(false)
+  const [viewGraphs, setViewGraphs] = useState(false)
+  const [viewHome, setViewHome] = useState(true)
+  const [viewOffers, setViewOffers] = useState(false)
   const [offers, setOffers] = useState([]);
   const req = new Requests();
+
+  const analyzeInGraphs = ()=>{
+    setViewHome(!viewHome)
+    setViewGraphs(!viewGraphs)
+  }
 
   function getOpportunitiesList() {
     setViewOpportunities(false)
@@ -27,7 +36,7 @@ function App() {
   const HandleOfferSelected = (md) => {
     let all = getOffers(opportunities, md.nome)
     setTimeout(() => {
-
+      setViewOffers(true)
       setOffers(all)
     }, 5000);
 
@@ -47,7 +56,6 @@ function App() {
     }
     // return melhor;
   }
-
 
   const getOffers = (instituicoes, creditType) => {
     const modalidades = [];
@@ -79,11 +87,18 @@ function App() {
     viewOpportunities,
     HandleOfferSelected,
     offers,
+    analyzeInGraphs,
+    viewOffers,
+
   }
 
+  const graphsOptions = {
+    analyzeInGraphs,
+  }
   return (
     <div className="App">
-      <Home options={homeOptions} />
+      {viewHome &&  <Home options={homeOptions} />}
+      {viewGraphs && <Graphs graphsOptions={graphsOptions} offers={offers} />}
     </div>
   );
 }

@@ -2,8 +2,8 @@ export default class Requests {
     url ;
 
     constructor() {
-        this.url = "https://gosat-credit-api-production.up.railway.app/api/"
-        // this.url = "http://127.0.0.1:8000/api/"
+        // this.url = "https://gosat-credit-api-production.up.railway.app/api/"
+        this.url = "http://127.0.0.1:8000/api/"
     }
 
     async getOpportunities(cpf){

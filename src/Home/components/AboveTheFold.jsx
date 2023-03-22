@@ -4,8 +4,9 @@ import Card from './Card';
 import Offer from './Offer';
 import InputCpf from './InputCpf';
 import Spinner from '../../hooks/Spinner'
+import Button from '../../hooks/Button'
 const AboveTheFold = ({ options }) => {
-    const { cpf, handleChangeCpf, getOpportunitiesList, opportunities, homeSpinner, viewOpportunities, HandleOfferSelected, offers, viewOffers } = options
+    const { cpf, handleChangeCpf, getOpportunitiesList, opportunities, homeSpinner, viewOpportunities, HandleOfferSelected, offers, analyzeInGraphs, viewOffers } = options
 
     return (
         <div className='AboveTheFold'>
@@ -35,6 +36,10 @@ const AboveTheFold = ({ options }) => {
                             } />
                         );
                     })}
+
+
+                    {viewOffers && <Button className="pl-4 button" title="Analisar Ofertas" onClick={()=>{analyzeInGraphs()}}/>}
+
                 </div>
             </div>
         </div>
