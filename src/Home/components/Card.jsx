@@ -5,7 +5,7 @@ const Card = ({ opportunity, HandleOfferSelected }) => {
     return (
         <div className='Card'>
             <div className='card-header'>
-                <h1 className='card-title' onClick={()=>console.log("TESTEI")}>{opportunity.nome}</h1>
+                <h1 className='card-title'>{opportunity.nome}</h1>
                 <div className="badge-container">
                     {opportunity.modalidades.map((md) => {
                         return (

@@ -27,7 +27,10 @@
     display: flex;
     flex-direction: column;
 }
-
+.content-row{
+    display: flex;
+    flex-direction: row;
+}
 .menu-ul{
     display: flex;
     list-style: none;
@@ -182,4 +185,21 @@
 
 .ml-4{
     margin-left: 100px;
+}
+
+.card-offer{
+    width: 600px;
+    height: 150px;
+    background-color: #fbfbfb;
+    color: #000000;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-left:12rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* shadow */
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
 }

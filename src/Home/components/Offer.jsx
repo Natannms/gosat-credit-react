@@ -1,23 +1,23 @@
 import React from 'react'
+import '../style.css';
 
-const Offer = () => {
-
+const Offer = ({ QntParcelaMax, valorMax,valorMin,jurosMes,QntParcelaMin }) => {
     return (
-        <div className="Card-offer">
+        <div className="card-offer">
             <div className="ValorMax">
-                <strong>Valor Máximo: </strong><span>19250</span>
+                <strong>Valor Máximo: </strong><span>{valorMax}</span>
             </div>
             <div className="ValorMin">
-                <strong>Valor Mínimo: </strong><span>10000</span>
+                <strong>Valor Mínimo: </strong><span>{valorMin}</span>
             </div>
             <div className="jurosMes">
-                <strong>Juros ao mês: </strong><span>0.0118</span>
+                <strong>Juros ao mês: </strong><span>{jurosMes}</span>
             </div>
             <div className="QntParcelaMax">
-                <strong>Quantidade de Parcelas Max.: </strong><span>72</span>
+                <strong>Quantidade de Parcelas Max.: </strong><span>{QntParcelaMax}</span>
             </div>
             <div className="QntParcelaMin">
-                <strong>Quantidade de Parcelas Min.: </strong><span>24</span>
+                <strong>Quantidade de Parcelas Min.: </strong><span>{QntParcelaMin}</span>
             </div>
         </div>
     );
