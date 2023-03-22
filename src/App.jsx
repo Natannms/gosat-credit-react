@@ -8,6 +8,7 @@ function App() {
   const [cpf, setCpf] = useState('11111111111');
   const [opportunities, setOpportunities] = useState();
   const [homeSpinner, setHomeSpinner] = useState(false);
+  const [offerSpinner, setOfferSpinner] = useState(false)
   const [viewOpportunities, setViewOpportunities] = useState(false)
   const [viewGraphs, setViewGraphs] = useState(false)
   const [viewHome, setViewHome] = useState(true)
@@ -29,13 +30,18 @@ function App() {
       setTimeout(() => {
         setHomeSpinner(false)
         setViewOpportunities(true)
+        setViewOffers(false)
+        setOffers([])
       }, 2000);
     })
   }
 
   const HandleOfferSelected = (md) => {
+    setOfferSpinner(true)
     let all = getOffers(opportunities, md.nome)
     setTimeout(() => {
+      setViewOpportunities(false)
+      setOfferSpinner(false)
       setViewOffers(true)
       setOffers(all)
     }, 5000);
@@ -78,6 +84,10 @@ function App() {
   const handleChangeCpf = (e) => {
     setCpf(e.target.value)
   }
+
+  const returnToHome = ()=>{
+    window.location.reload()
+  }
   const homeOptions = {
     cpf,
     handleChangeCpf,
@@ -89,7 +99,8 @@ function App() {
     offers,
     analyzeInGraphs,
     viewOffers,
-
+    returnToHome,
+    offerSpinner
   }
 
   const graphsOptions = {

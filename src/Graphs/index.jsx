@@ -9,9 +9,10 @@ import {
   Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import { faker } from '@faker-js/faker';
 import './index.css';
 import Offer from '../Home/components/Offer';
+import Button from '../hooks/Button'
+import { FaArrowCircleLeft } from "react-icons/fa";
 
 ChartJS.register(
   CategoryScale,
@@ -68,7 +69,7 @@ export function Graphs({ graphsOptions, offers }) {
     });
   }
   datasets();
-  console.log("DATASETS", dataSets);
+ const returnButton = `Voltar ${<FaArrowCircleLeft />}`
   const data = {
     labels,
     datasets: dataSets
@@ -86,6 +87,7 @@ export function Graphs({ graphsOptions, offers }) {
             } />
           );
         })}
+        <Button className="button-return" title="Voltar" icon={<FaArrowCircleLeft />} onClick={()=>{analyzeInGraphs()}}/>
       </div>
     </div>
 
