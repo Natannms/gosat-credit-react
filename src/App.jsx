@@ -53,16 +53,34 @@ function App() {
 
   }
 
+  const selectOfferForContract = (offer)=>{
+     req.hireLoan(offer)
+  }
+
   const filterBestOffer = (filter) => {
     if (filter === "jurosMes") {
-      let bestOffer = null;
+      let bestOfferJurosMes,bestOfferQntParcelaMax,bestOfferQntParcelaMin,bestOfferQntValorMax,bestOfferQntValorMin = null;
+
       for (let i = 0; i < offers.length; i++) {
-        if (!bestOffer || offers[i].offer.jurosMes < bestOffer.offer.jurosMes) {
-          bestOffer = offers[i];
+        if (!bestOfferJurosMes || offers[i].offer.jurosMes < bestOfferJurosMes.offer.jurosMes) {
+          bestOfferJurosMes = offers[i];
+        }
+        if (!bestOfferQntParcelaMax || offers[i].offer.QntParcelaMax < bestOfferQntParcelaMax.offer.QntParcelaMax) {
+          bestOfferQntParcelaMax = offers[i];
         }
       }
+      // offers.forEach(offer => {
+      //    if(offer.cod === bestOffer.cod){
+      //       offer.bestOffer = true
+      //    }
+      // });
     }
-    // return melhor;
+  }
+
+  const calculaValorTotal = (offer)=>{
+      // Calcula o valor total do empréstimo com base nos parâmetros fornecidos
+  const valorTotal = offer.valorMax * Math.pow(1 + offer.jurosMes, offer.QntParcelaMax);
+
   }
 
   const getOffers = (instituicoes, creditType) => {
@@ -108,14 +126,14 @@ function App() {
     returnToHome,
     offerSpinner,
     viewGraphs,
-    graphsOptions
+    graphsOptions,
+    selectOfferForContract
   }
 
 
   return (
     <div className="App">
       {viewHome &&  <Home options={homeOptions} />}
-
     </div>
   );
 }

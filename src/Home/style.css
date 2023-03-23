@@ -281,13 +281,15 @@
     border-radius: 0.5rem;
     padding: 1rem;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-between;
     margin-top: 10px;
     /* shadow */
     box-shadow: 0 0 10px rgba(0,0,0,0.2);
 }
-
+.card-offer .card-item{
+    margin-top: 15px;
+}
 .bg-primary{
     background-color: #FA8B16;
 }

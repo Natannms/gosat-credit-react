@@ -74,7 +74,6 @@ export function Graphs({ graphsOptions, offers }) {
     labels,
     datasets: dataSets
   };
-  console.log("GRAFICOS INICIANDO", offers)
   return (
     <div className="container">
       <div className="graphs-content">
@@ -83,7 +82,7 @@ export function Graphs({ graphsOptions, offers }) {
       <div className="card-content">
         {offers && offers.map((item) => {
           return (
-            <Offer QntParcelaMax={item.offer.QntParcelaMax} QntParcelaMin={item.offer.QntParcelaMin} jurosMes={item.offer.jurosMes} valorMax={item.offer.valorMax} valorMin={item.offer.valorMin
+            <Offer  QntParcelaMax={item.offer.QntParcelaMax} QntParcelaMin={item.offer.QntParcelaMin} jurosMes={item.offer.jurosMes} valorMax={item.offer.valorMax} valorMin={item.offer.valorMin
             } />
           );
         })}

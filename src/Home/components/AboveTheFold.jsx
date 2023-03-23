@@ -9,7 +9,7 @@ import { FaArrowCircleLeft, FaRegChartBar } from "react-icons/fa";
 import { Graphs } from '../../Graphs';
 
 const AboveTheFold = ({ options }) => {
-    const { cpf, handleChangeCpf, getOpportunitiesList, opportunities, homeSpinner, viewOpportunities, HandleOfferSelected, offers, analyzeInGraphs, viewOffers, returnToHome, offerSpinner,viewGraphs, graphsOptions } = options
+    const { cpf, handleChangeCpf, getOpportunitiesList, opportunities, homeSpinner, viewOpportunities, HandleOfferSelected, offers, analyzeInGraphs, viewOffers, returnToHome, offerSpinner,viewGraphs, graphsOptions, selectOfferForContract } = options
 
     return (
         <div className='AboveTheFold'>
@@ -45,7 +45,7 @@ const AboveTheFold = ({ options }) => {
 
                     {offers && viewOffers && offers.map((item) => {
                         return (
-                            <Offer QntParcelaMax={item.offer.QntParcelaMax} QntParcelaMin={item.offer.QntParcelaMin} jurosMes={item.offer.jurosMes} valorMax={item.offer.valorMax} valorMin={item.offer.valorMin
+                            <Offer onClick={()=>{selectOfferForContract(item)}} QntParcelaMax={item.offer.QntParcelaMax} QntParcelaMin={item.offer.QntParcelaMin} jurosMes={item.offer.jurosMes} valorMax={item.offer.valorMax} valorMin={item.offer.valorMin
                             } />
                         );
                     })}
