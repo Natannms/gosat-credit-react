@@ -1,5 +1,5 @@
 import React from 'react'
-import '../style.css';
+
 import Badge from './Badge';
 const Card = ({ opportunity, HandleOfferSelected }) => {
     return (
@@ -9,7 +9,7 @@ const Card = ({ opportunity, HandleOfferSelected }) => {
                 <div className="badge-container">
                     {opportunity.modalidades.map((md) => {
                         return (
-                            <Badge key={md.code} modalidade={md} onClick={()=>HandleOfferSelected(md)}/>
+                            <Badge key={md.code} modalidade={md} onClick={()=>HandleOfferSelected(md, opportunity)}/>
                         );
                     })}
                 </div>

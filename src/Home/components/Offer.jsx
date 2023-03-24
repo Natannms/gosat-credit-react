@@ -1,6 +1,5 @@
 import React from 'react'
 import Button from '../../hooks/Button';
-import '../style.css';
 
 const Offer = ({ QntParcelaMax, valorMax, valorMin, jurosMes, QntParcelaMin, onClick }) => {
     return (

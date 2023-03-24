@@ -21,19 +21,18 @@ export default class Requests {
     }
 
     async hireLoan(data){
-        console.log(data)
-        // const options = {
-        //     method: 'POST',
-        //     headers: {
-        //       'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(data)
-        // };
+        const options = {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        };
 
-        // return await fetch(`${this.url}hire`, options)
-        // .then(response => response.json())
-        // .then(data => {
-        //     return data
-        // })
+        return await fetch(`${this.url}hire`, options)
+        .then(response => response.json())
+        .then(data => {
+          return data
+        })
     }
 }
