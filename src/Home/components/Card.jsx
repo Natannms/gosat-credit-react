@@ -1,18 +1,12 @@
-import React from 'react'
-
-import Badge from './Badge';
-const Card = ({ opportunity, HandleOfferSelected }) => {
+import React, { useState } from 'react'
+const Card = ({ op, onClick, className, options }) => {
+    const { selectedItems, index } = options
     return (
-        <div className='Card'>
+        <div onClick={onClick} className={selectedItems.includes(index) ? "Card-Selected" : "Card" }>
+
             <div className='card-header'>
-                <h1 className='card-title'>{opportunity.nome}</h1>
-                <div className="badge-container">
-                    {opportunity.modalidades.map((md) => {
-                        return (
-                            <Badge key={md.code} modalidade={md} onClick={()=>HandleOfferSelected(md, opportunity)}/>
-                        );
-                    })}
-                </div>
+                <h1 className='card-title'>{op.nome}</h1>
+                <p>{op.selected ? 'Card' : 'Card selected'}</p>
             </div>
         </div>
     );

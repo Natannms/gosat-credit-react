@@ -11,8 +11,10 @@ import Dashboard from './Dashboard/Dashboard';
 function App() {
   const [cpf, setCpf] = useState('11111111111');
   const [opportunities, setOpportunities] = useState();
-  const [messageError ,setViewMessageError] =useState('')
-  const [messageSuccess ,setViewMessageSuccess] =useState('')
+  const [messageError, setViewMessageError] = useState('')
+  const [messageSuccess, setViewMessageSuccess] = useState('')
+  const [offersSelected, setOffersSelected] = useState([]);
+  const [selectedItems, setselectedItems] = useState([])
   // spinners
   const [homeSpinner, setHomeSpinner] = useState(false);
   const [offerSpinner, setOfferSpinner] = useState(false)
@@ -24,7 +26,7 @@ function App() {
   const [viewOffers, setViewOffers] = useState(false)
   const [contractView, setContractView] = useState(false)
   const [dashboardView, setDashboardView] = useState(false)
-  const [viewError, setViewError ] = useState(false)
+  const [viewError, setViewError] = useState(false)
   const [viewSuccess, setViewSuccess] = useState(false)
 
   // variaveis de autenticação
@@ -57,7 +59,7 @@ function App() {
     setHomeSpinner(true)
     let opportunitiesList = req.getOpportunities(cpf);
     opportunitiesList.then((data) => {
-      setOpportunities(data.instituicoes);
+      setOpportunities(data);
       setTimeout(() => {
         setHomeSpinner(false)
         setViewOpportunities(true)
@@ -67,15 +69,34 @@ function App() {
     })
   }
 
-  const HandleOfferSelected = (md, op) => {
+  const getOffers = () => {
     setOfferSpinner(true)
-    let all = getOffers(opportunities, md.nome)
-    setTimeout(() => {
-      setViewOpportunities(false)
-      setOfferSpinner(false)
-      setViewOffers(true)
-      setOffers(all)
-    }, 5000);
+    let res = req.getOffers(cpf, offersSelected)
+    res.then((data) => {
+      setTimeout(() => {
+        setViewOpportunities(false)
+        setOfferSpinner(false)
+        setViewOffers(true)
+        setOffers(data)
+      }, 5000);
+    })
+  }
+
+  const HandleOfferSelected = (op, index) => {
+    let newOffersSelected = offersSelected;
+    if (selectedItems.includes(index)) {
+      setselectedItems(selectedItems.filter((itemIndex) => itemIndex !== index))
+      newOffersSelected = newOffersSelected.filter((item) => item.instituicao_id !== op.id)
+    } else {
+      setselectedItems(selectedItems.concat(index))
+      op.modalidades.forEach(element => {
+        newOffersSelected.push({
+          instituicao_id: op.id,
+          codModalidade: element.cod,
+        })
+      });
+    }
+    setOffersSelected(newOffersSelected)
   }
 
   const cancelAllViews = () => {
@@ -138,24 +159,6 @@ function App() {
 
   }
 
-  const getOffers = (instituicoes, creditType) => {
-    const modalidades = [];
-    for (const instituicao of instituicoes) {
-      for (const modalidade of instituicao.modalidades) {
-        if (modalidade.nome === creditType) {
-          req.getOffers(cpf, instituicao.id, modalidade.cod)
-            .then((data) => {
-              modalidade.offer = data
-              modalidade.instituicao = instituicao.nome
-              modalidade.instituicao_id = instituicao.id
-              modalidades.push(modalidade)
-            })
-        }
-      }
-    }
-    return modalidades;
-  }
-
   const handleChangeCpf = (e) => {
     setCpf(e.target.value)
   }
@@ -182,7 +185,10 @@ function App() {
     offerSpinner,
     viewGraphs,
     graphsOptions,
-    selectOfferForContract
+    selectOfferForContract,
+    getOffers,
+    offersSelected,
+    selectedItems, setselectedItems
   }
   const contractOptions = {
     requestData,
@@ -191,8 +197,8 @@ function App() {
     password: password,
     document: cpf,
     cpf: cpf,
-    hireQntInstallments:hireQntInstallments,
-    hireValue:hireValue,
+    hireQntInstallments: hireQntInstallments,
+    hireValue: hireValue,
     viewError,
     messageError,
     messageSuccess,
@@ -208,30 +214,31 @@ function App() {
     handleChangeDocument(e) {
       setCpf(e.target.value);
     },
-    handleChangeHireValue(e){
-     setHireValue(e.target.value);
+    handleChangeHireValue(e) {
+      setHireValue(e.target.value);
     },
-    handleChangeHireQntInstallments(e){
+    handleChangeHireQntInstallments(e) {
       setHireQntInstallments(e.target.value);
     },
-    handleRequestHireLoan(){
+    handleRequestHireLoan() {
       requestData.name = name;
       requestData.email = email;
       requestData.password = password;
       requestData.document = document;
       requestData.hire_qnt_installments = hireQntInstallments;
       requestData.hire_value = hireValue;
-      req.hireLoan(requestData)
-      .then((data) => {
-        if(data.user){
-          setViewMessageSuccess("Solicitado com sucesso. Acompanhe em seu email o status de sua solicitação.");
-          setViewSuccess(true)
-        }else{
-          console.log(data.message);
-          setViewError(!viewError)
-          setViewMessageError(data.message)
-        }
-      })
+
+      console.log(requestData);
+      // req.hireLoan(requestData)
+      //   .then((data) => {
+      //     if (data.user) {
+      //       setViewMessageSuccess("Solicitado com sucesso. Acompanhe em seu email o status de sua solicitação.");
+      //       setViewSuccess(true)
+      //     } else {
+      //       setViewError(!viewError)
+      //       setViewMessageError(data.message)
+      //     }
+      //   })
     }
   }
 

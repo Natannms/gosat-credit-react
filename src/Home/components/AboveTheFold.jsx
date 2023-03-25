@@ -5,11 +5,11 @@ import Offer from './Offer';
 import InputCpf from './InputCpf';
 import Spinner from '../../hooks/Spinner'
 import Button from '../../hooks/Button'
-import { FaArrowCircleLeft, FaRegChartBar } from "react-icons/fa";
+import { FaArrowCircleLeft, FaArrowCircleRight, FaRegChartBar } from "react-icons/fa";
 import { Graphs } from '../../Graphs';
 
 const AboveTheFold = ({ options }) => {
-    const { cpf, handleChangeCpf, getOpportunitiesList, opportunities, homeSpinner, viewOpportunities, HandleOfferSelected, offers, analyzeInGraphs, viewOffers, returnToHome, offerSpinner,viewGraphs, graphsOptions, selectOfferForContract } = options
+    const { cpf, handleChangeCpf, getOpportunitiesList, opportunities, homeSpinner, viewOpportunities, HandleOfferSelected, offers, analyzeInGraphs, viewOffers, returnToHome, offerSpinner, viewGraphs, graphsOptions, selectOfferForContract, selectedItems, getOffers } = options
 
     return (
         <div className='AboveTheFold'>
@@ -22,15 +22,27 @@ const AboveTheFold = ({ options }) => {
                     </div>
                     <div className="ajustments-left">
                         {opportunities && viewOpportunities &&
-                            <Button
-                                className="btn-secondary bg-secondary btn w-48 mb-2"
-                                title="Voltar"
-                                icon={<FaArrowCircleLeft />}
-                                onClick={() => { returnToHome() }}
-                            />}
-                        {opportunities && viewOpportunities && opportunities.map((op) => {
+                            <div className="content-row">
+                                <Button
+                                    className="btn-secondary bg-secondary btn w-48 mb-2 mr-4"
+                                    title="Voltar"
+                                    icon={<FaArrowCircleLeft />}
+                                    onClick={() => { returnToHome() }}
+                                />
+                                <Button
+                                    className="btn-primary bg-primary btn w-48 mb-2"
+                                    title="Continuar"
+                                    icon={<FaArrowCircleRight />}
+                                    onClick={() => { getOffers() }}
+                                />
+                            </div>
+                        }
+                        <div className="content-row  items-center">
+                            <p className="text-1xl text-primary">Selecione um banco e continue:</p>
+                        </div>
+                        {opportunities && viewOpportunities && opportunities.map((op, index) => {
                             return (
-                                <Card HandleOfferSelected={HandleOfferSelected} opportunity={op} />
+                                <Card key={index} options={{ selectedItems, index }} onClick={() => HandleOfferSelected(op, index)} op={op} />
                             );
                         })}
                     </div>
@@ -45,16 +57,16 @@ const AboveTheFold = ({ options }) => {
 
                     {offers && viewOffers && offers.map((item) => {
                         return (
-                            <Offer onClick={()=>{selectOfferForContract(item)}} QntParcelaMax={item.offer.QntParcelaMax} QntParcelaMin={item.offer.QntParcelaMin} jurosMes={item.offer.jurosMes} valorMax={item.offer.valorMax} valorMin={item.offer.valorMin
+                            <Offer onClick={() => { selectOfferForContract(item) }} QntParcelaMax={item.offer.QntParcelaMax} QntParcelaMin={item.offer.QntParcelaMin} jurosMes={item.offer.jurosMes} valorMax={item.offer.valorMax} valorMin={item.offer.valorMin
                             } />
                         );
                     })}
-                      <div className="content-row pt-2">
+                    <div className="content-row pt-2">
                         {viewOffers && <Button
                             className="btn-secondary bg-secondary btn w-60 mb-2"
                             title="Oportunidades"
                             icon={<FaArrowCircleLeft />}
-                            onClick={() => { getOpportunitiesList()}}
+                            onClick={() => { getOpportunitiesList() }}
                         />
                         }
 

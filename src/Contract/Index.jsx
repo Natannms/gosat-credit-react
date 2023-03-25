@@ -4,8 +4,6 @@ import Button from '../hooks/Button'
 const Contract = ({ contractOptions }) => {
     const { name, email, password, cpf, hireQntInstallments,
         hireValue, handleChangeName, handleChangeEmail, handleChangePassword, handleChangeDocument, requestData, handleChangeHireValue, handleChangeHireQntInstallments, handleRequestHireLoan, viewError, messageError, messageSuccess } = contractOptions
-
-    console.log(hireValue);
     return (
         <div className='contract-content bg-primary content-row justify-center items-center p-2'>
             {!messageSuccess &&

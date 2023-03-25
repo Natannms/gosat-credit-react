@@ -83,6 +83,10 @@ code {
 .mb-2{
   margin-bottom: 2.5rem;
 }
+
+.mr-4{
+  margin-right: 16rem;
+}
 .p-1{
   padding: 0.5rem;
 }
@@ -304,8 +308,25 @@ code {
   margin-top: 10px;
   /* shadow */
   box-shadow: 0 0 10px rgba(0,0,0,0.2);
-}
+  user-select: none;
 
+}
+.Card-Selected{
+  width: 600px;
+  height: 150px;
+  background-color: #5281dd;
+  color: #ffffff;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 10px;
+  /* shadow */
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  user-select: none;
+
+}
 .ajustments-left{
   margin-left:12rem;
   margin-top: 1rem;
