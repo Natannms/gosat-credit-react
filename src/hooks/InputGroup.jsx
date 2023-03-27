@@ -1,6 +1,6 @@
 import React from 'react'
 
-const InputGroup = ({label, inputType, styles, valor, onChange, min, max, small}) => {
+const InputGroup = ({label, inputType, styles, valor, onChange, min, max, small, error}) => {
 
     return (
         <div className='input-group'>

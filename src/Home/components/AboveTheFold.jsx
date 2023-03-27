@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Card from './Card';
+import Card from '../../hooks/Card';
 import Offer from './Offer';
 import InputCpf from './InputCpf';
 import Spinner from '../../hooks/Spinner'

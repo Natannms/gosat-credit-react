@@ -6,12 +6,13 @@ import { useState } from 'react';
 import { Graphs } from './Graphs';
 import Contract from './Contract/Index';
 import Dashboard from './Dashboard/Dashboard';
+import Authentication from './Authentication';
 
 
 function App() {
   const [cpf, setCpf] = useState('11111111111');
   const [opportunities, setOpportunities] = useState();
-  const [messageError, setViewMessageError] = useState('')
+  const [messageError, setViewMessageError] = useState({})
   const [messageSuccess, setViewMessageSuccess] = useState('')
   const [offersSelected, setOffersSelected] = useState([]);
   const [selectedItems, setselectedItems] = useState([])
@@ -28,7 +29,8 @@ function App() {
   const [dashboardView, setDashboardView] = useState(false)
   const [viewError, setViewError] = useState(false)
   const [viewSuccess, setViewSuccess] = useState(false)
-
+  const [viewLogin, setViewLogin] =  useState(false);
+  const [fieldErros, setFieldErros] = useState({})
   // variaveis de autenticação
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -36,6 +38,8 @@ function App() {
   const [document, setDocument] = useState('');
 
   const [offers, setOffers] = useState([]);
+  const [contracts, setContracts] = useState([]);
+
   // variaveis de contrato (informações do que o cliente quer)
   const [hireQntInstallments, setHireQntInstallments] = useState();
   const [hireValue, setHireValue] = useState();
@@ -100,25 +104,37 @@ function App() {
   }
 
   const cancelAllViews = () => {
-    setHomeSpinner(false);
-    setOfferSpinner(false);
-    setViewOpportunities(false);
-    setViewGraphs(false);
-    setViewHome(false);
-    setViewOffers(false);
+    setViewOpportunities(false)
+    setViewGraphs(false)
+    setViewHome(false)
+    setViewOffers(false)
     setContractView(false)
+    setDashboardView(false)
+    setViewError(false)
+    setViewSuccess(false)
+    setViewLogin(false)
+    setFieldErros(false)
+  }
+
+  const clearUserData = ()=>{
+    setName('')
+    setEmail('')
+    setPassword('')
+    setCpf('')
+    setRequestData({})
+    setOpportunities(null)
+    setViewMessageError({})
+    setViewMessageSuccess('')
+    setOffersSelected([])
+    setselectedItems([])
   }
 
   const selectOfferForContract = (item) => {
+    console.log("ITEM:", item);
     setHireValue(item.offer.valorMin)
     setRequestData({
-      name,
-      email,
-      password,
-      document,
-      instituicao: item.instituicao,
       instituicao_id: item.instituicao_id,
-      codModalidade: item.cod,
+      codModalidade: item.codModalidade,
       hire_qnt_installments: hireQntInstallments,
       hire_value: hireValue,
       offer_qnt_installments_max: item.offer.QntParcelaMax,
@@ -127,9 +143,11 @@ function App() {
       offer_value_max: item.offer.valorMax,
       offer_value_min: item.offer.valorMin
     });
-    cancelAllViews()
+    // cancelAllViews()
 
     setContractView(true)
+    console.log("EXECUTEI AGORA", requestData);
+
   }
 
 
@@ -167,6 +185,68 @@ function App() {
     window.location.reload()
   }
 
+  const register = async () => {
+    try {
+      const data = await req.register({
+        name,
+        email,
+        password,
+        document: cpf,
+      });
+
+      if (data.statusCode === 400 || data.statusCode === 500) {
+        setViewError(!viewError);
+        setViewMessageError(data.message);
+        console.log("register error:", messageError);
+        return false;
+      }
+
+      if (data.statusCode === 200 || data.statusCode === 201) {
+        // set di in localStorage
+        localStorage.setItem("user", JSON.stringify(data.user));
+        return true;
+      }
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  };
+
+  const registerContract = async ()=>{
+    const registroEfetuado = await register();
+    if (!registroEfetuado) {
+      alert("Erro ao cadastrar usuario");
+    }else{
+      alert("registrado com sucesso !")
+      const user = JSON.parse(localStorage.getItem("user"));
+      const banco = opportunities.find(item => item.id === requestData.instituicao_id);
+
+      requestData.hire_qnt_installments = hireQntInstallments ? hireQntInstallments : requestData.offer_qnt_installments_min;
+      requestData.hire_value = hireValue;
+      requestData.instituicao = banco.nome
+      requestData.user_id = user.id
+
+      console.log("Request Data", requestData);
+      req.createContract(requestData)
+      .then((data) => {
+        console.log("create Contract", data);
+        if(data.statusCode === 200 || data.statusCode === 201){
+          cancelAllViews()
+
+          setViewLogin(true)
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    }
+
+    if(registroEfetuado){
+      // get contrato
+
+    }
+  }
+
   const graphsOptions = {
     analyzeInGraphs,
   }
@@ -188,7 +268,10 @@ function App() {
     selectOfferForContract,
     getOffers,
     offersSelected,
-    selectedItems, setselectedItems
+    selectedItems, setselectedItems,
+    setViewLogin,
+    cancelAllViews,
+    dashboardView
   }
   const contractOptions = {
     requestData,
@@ -221,32 +304,79 @@ function App() {
       setHireQntInstallments(e.target.value);
     },
     handleRequestHireLoan() {
-      requestData.name = name;
-      requestData.email = email;
-      requestData.password = password;
-      requestData.document = document;
-      requestData.hire_qnt_installments = hireQntInstallments;
-      requestData.hire_value = hireValue;
+      registerContract();
 
-      console.log(requestData);
-      // req.hireLoan(requestData)
-      //   .then((data) => {
-      //     if (data.user) {
-      //       setViewMessageSuccess("Solicitado com sucesso. Acompanhe em seu email o status de sua solicitação.");
-      //       setViewSuccess(true)
-      //     } else {
-      //       setViewError(!viewError)
-      //       setViewMessageError(data.message)
-      //     }
-      //   })
+      }
+  }
+
+  const authOptions = {
+    email,
+    password,
+    handleChangeEmail(e) {
+      setEmail(e.target.value);
+    },
+    handleChangePassword(e) {
+      setPassword(e.target.value);
+    },
+
+    login(){
+      req.login({email, password})
+      .then((data) => {
+        console.log("login", data);
+        if(data.statusCode === 200 || data.statusCode === 201){
+          localStorage.setItem("token", JSON.stringify(data.token));
+          cancelAllViews()
+          setDashboardView(true)
+          getContract(data.user.id)
+        }
+
+        if(data.statusCode === 400 || data.statusCode === 500){
+          console.log(data);
+          // setViewError(!viewError);
+          // setViewMessageError(data.message);
+          // console.log("register error:", messageError);
+          alert(messageError)
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      })
     }
   }
 
+  const getContract =() =>{
+    const token =  JSON.parse(localStorage.getItem("token"));
+    // get de first char from token
+    const tokenFirstChar = token.charAt(0);
+    req.getContract(tokenFirstChar)
+    .then((data) => {
+    console.log("contracts",data)
+      let newContracts =  contracts;
+      newContracts.push(data)
+      setContracts(newContracts)
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
+
+
+  const dashboardOptions = {
+    logo: 'Gosat Credits',
+    // get toke fro localstorage
+    userToken:  JSON.parse(localStorage.getItem("token")),
+    setViewLogin,
+    setDashboardView,
+    clearUserData,
+    cancelAllViews,
+    contracts
+  }
   return (
     <div className="App">
       {viewHome && <Home options={homeOptions} />}
       {contractView && <Contract contractOptions={contractOptions} />}
-      {dashboardView && <Dashboard />}
+      {dashboardView && <Dashboard dashboardOptions={dashboardOptions} />}
+      {viewLogin && <Authentication AuthOptions={authOptions}/>}
     </div>
   );
 }

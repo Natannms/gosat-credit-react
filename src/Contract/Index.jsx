@@ -4,6 +4,7 @@ import Button from '../hooks/Button'
 const Contract = ({ contractOptions }) => {
     const { name, email, password, cpf, hireQntInstallments,
         hireValue, handleChangeName, handleChangeEmail, handleChangePassword, handleChangeDocument, requestData, handleChangeHireValue, handleChangeHireQntInstallments, handleRequestHireLoan, viewError, messageError, messageSuccess } = contractOptions
+
     return (
         <div className='contract-content bg-primary content-row justify-center items-center p-2'>
             {!messageSuccess &&
@@ -14,16 +15,16 @@ const Contract = ({ contractOptions }) => {
                         <div className="error bg-third p-1 rounded-10 text-white alertEffect">
                             <div className="error-message content-row justify-between p-1">
                                 <div className="error-message-text">
-                                    <span>{messageError}</span>
+                                   <span>{messageError}</span>
                                 </div>
                             </div>
                         </div>
                     }
-                    <InputGroup label="Nome" inputType="text" styles="input input-name" value={name} onChange={(e) => handleChangeName(e)} />
+                    <InputGroup  label="Nome" inputType="text" styles="input input-name" value={name} onChange={(e) => handleChangeName(e)} />
 
-                    <InputGroup label="CPF" inputType="text" styles="input input-document" value={cpf} onChange={(e) => handleChangeDocument(e)} />
+                    <InputGroup  label="CPF" inputType="text" styles="input input-document" value={cpf} onChange={(e) => handleChangeDocument(e)} />
 
-                    <InputGroup label="Email" inputType="text" styles="input input-email" value={email} onChange={(e) => handleChangeEmail(e)} />
+                    <InputGroup  label="Email" inputType="text" styles="input input-email" value={email} onChange={(e) => handleChangeEmail(e)} />
 
                     <InputGroup label="Senha" inputType="password" styles="input input-password" value={password} onChange={(e) => handleChangePassword(e)} />
 
