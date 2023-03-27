@@ -1,8 +1,7 @@
 export default class Requests {
     url ;
     constructor() {
-        // this.url = "https://gosat-credit-api-production.up.railway.app/api/"
-        this.url = "http://localhost:8000/api"
+        this.url = "https://gosat-credit-api-production.up.railway.app/api/"
 
     }
     async login(data){
